@@ -38,7 +38,8 @@ jobs:
           hits=$(git grep -n -E "${s}live|${s}test_[A-Za-z0-9]{20,}|${w}[A-Za-z0-9]{20,}|${b}(RSA |OPENSSH )?${k}" -- ':!vendor' ':!composer.lock' || true)
           assigned=$(git grep -n -E -i "aws_secret.{0,20}[\"'][A-Za-z0-9/+=]{20,}" -- ':!vendor' ':!composer.lock' | grep -v "env('" || true)
           if [ -n "$hits$assigned" ]; then echo "$hits$assigned"; echo 'Possible secret in tracked files' && exit 1; fi
-          test ! -f .env || (echo '.env must never be committed' && exit 1)
+          # .env must never be *committed* (this job creates a local one later for tests).
+          ! git ls-files --error-unmatch .env 2>/dev/null || (echo '.env must never be committed' && exit 1)
 
       - name: Code style
         run: php vendor/bin/pint --test app database tests routes config
