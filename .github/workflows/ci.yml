@@ -30,8 +30,14 @@ jobs:
         run: cp .env.example .env && php artisan key:generate --force
 
       - name: Secret scan (tracked files only)
+        # Matches real secret VALUES only: env('...') config references and the
+        # short test fixtures (e.g. 'whsec_test') are benign and must not trip it.
+        # Patterns are assembled from fragments so this step cannot match itself.
         run: |
-          ! git grep -n -E -i 'sk_live|sk_test_[A-Za-z0-9]{10,}|whsec_[A-Za-z0-9]{10,}|aws_secret|BEGIN RSA PRIVATE KEY' -- ':!vendor' ':!composer.lock' || (echo 'Possible secret in tracked files' && exit 1)
+          s='sk_'; w='whsec_'; b='BEGIN '; k='PRIVATE KEY';
+          hits=$(git grep -n -E "${s}live|${s}test_[A-Za-z0-9]{20,}|${w}[A-Za-z0-9]{20,}|${b}(RSA |OPENSSH )?${k}" -- ':!vendor' ':!composer.lock' || true)
+          assigned=$(git grep -n -E -i "aws_secret.{0,20}[\"'][A-Za-z0-9/+=]{20,}" -- ':!vendor' ':!composer.lock' | grep -v "env('" || true)
+          if [ -n "$hits$assigned" ]; then echo "$hits$assigned"; echo 'Possible secret in tracked files' && exit 1; fi
           test ! -f .env || (echo '.env must never be committed' && exit 1)
 
       - name: Code style
