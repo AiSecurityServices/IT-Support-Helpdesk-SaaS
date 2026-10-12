@@ -1,0 +1,25 @@
+@extends('layouts.marketing')
+@section('title', 'Solutions for MSPs, internal IT, consultancies and SMBs')
+@section('content')
+@include('marketing.partials.pagehead', ['eyebrow' => 'Solutions', 'slot' => 'Four ways of working, one instrument.', 'lede' => 'Different organisations feel different pressures. The platform adapts its posture to each.'])
+<section class="pf-section bg-white dark:bg-slate-950">
+  <div class="mx-auto max-w-7xl space-y-14 px-4 sm:px-6">
+    <div class="grid items-center gap-8 lg:grid-cols-5" id="msp">
+      <div class="pf-reveal lg:col-span-3"><p class="pf-eyebrow">01 · Managed service providers</p><h2 class="pf-display text-2xl font-bold sm:text-3xl">Every client isolated. Every engineer in one queue.</h2><p class="mt-3 leading-relaxed text-slate-600 dark:text-slate-300">Client organisations with separate SLAs, portals, assets and invoices. Per-customer reporting turns quarterly reviews into a five-minute export. Technician workloads stay balanced across the whole book of business.</p></div>
+      <div class="pf-mini-ui pf-reveal lg:col-span-2" role="img" aria-label="Illustrated multi-client view"><div class="pf-mini-ui-bar"><i></i><i></i><i></i><span class="ml-2 font-mono text-[0.66rem] tracking-widest text-slate-400">CLIENTS · SAMPLE</span></div><div class="pf-mini-row"><x-badge color="green">Acme Ltd</x-badge><span>SLA 98.2% · 3 open</span></div><div class="pf-mini-row"><x-badge color="green">Globex</x-badge><span>SLA 99.1% · 1 open</span></div><div class="pf-mini-row"><x-badge color="yellow">Initech</x-badge><span>SLA 94.7% · 6 open</span></div></div>
+    </div>
+    <div class="grid items-center gap-8 lg:grid-cols-5" id="internal-it">
+      <div class="pf-mini-ui pf-reveal order-2 lg:order-1 lg:col-span-2" role="img" aria-label="Illustrated internal IT view"><div class="pf-mini-ui-bar"><i></i><i></i><i></i><span class="ml-2 font-mono text-[0.66rem] tracking-widest text-slate-400">STAFF PORTAL · SAMPLE</span></div><div class="pf-mini-row"><x-icon name="check" /><span>“Laptop approved in 2 hours”</span></div><div class="pf-mini-row"><x-icon name="check" /><span>“Printer fixed same day”</span></div><div class="pf-mini-row"><x-icon name="clock" /><span>“Waiting on finance approval”</span></div></div>
+      <div class="pf-reveal order-1 lg:order-2 lg:col-span-3"><p class="pf-eyebrow">02 · Internal IT departments</p><h2 class="pf-display text-2xl font-bold sm:text-3xl">A portal staff will actually use.</h2><p class="mt-3 leading-relaxed text-slate-600 dark:text-slate-300">Onboarders, movers and leavers flow through request templates. Devices, warranties and assignments stay visible. Leadership sees resolution times, not ticket counts.</p></div>
+    </div>
+    <div class="grid items-center gap-8 lg:grid-cols-5" id="consultancies">
+      <div class="pf-reveal lg:col-span-3"><p class="pf-eyebrow">03 · IT consultancies</p><h2 class="pf-display text-2xl font-bold sm:text-3xl">Evidence for every billable hour.</h2><p class="mt-3 leading-relaxed text-slate-600 dark:text-slate-300">Project-tagged tickets, time captured at the point of work, and client-ready invoices with the full thread attached. Disputes end before they start.</p></div>
+      <div class="pf-mini-ui pf-reveal lg:col-span-2" role="img" aria-label="Illustrated billable time view"><div class="pf-mini-ui-bar"><i></i><i></i><i></i><span class="ml-2 font-mono text-[0.66rem] tracking-widest text-slate-400">BILLABLE · SAMPLE</span></div><div class="pf-mini-row"><span>Firewall audit</span><span class="ml-auto font-mono text-cyan-300">6.5 h</span></div><div class="pf-mini-row"><span>Migration prep</span><span class="ml-auto font-mono text-cyan-300">3.0 h</span></div><div class="pf-mini-row"><span>Invoice #1042</span><span class="ml-auto font-mono text-cyan-300">£1,140</span></div></div>
+    </div>
+    <div class="grid items-center gap-8 lg:grid-cols-5" id="smb">
+      <div class="pf-mini-ui pf-reveal order-2 lg:order-1 lg:col-span-2" role="img" aria-label="Illustrated starter plan view"><div class="pf-mini-ui-bar"><i></i><i></i><i></i><span class="ml-2 font-mono text-[0.66rem] tracking-widest text-slate-400">STARTER · SAMPLE</span></div><div class="pf-mini-row"><x-icon name="ticket" /><span>12 tickets this month</span></div><div class="pf-mini-row"><x-icon name="device" /><span>34 devices tracked</span></div><div class="pf-mini-row"><x-icon name="check" /><span>One technician, zero chaos</span></div></div>
+      <div class="pf-reveal order-1 lg:order-2 lg:col-span-3"><p class="pf-eyebrow">04 · Small and medium businesses</p><h2 class="pf-display text-2xl font-bold sm:text-3xl">Start small. Grow deliberately.</h2><p class="mt-3 leading-relaxed text-slate-600 dark:text-slate-300">One technician, one queue, one invoice template. Automation and SLAs wait until they earn their keep — then switch on in an afternoon.</p><p class="mt-4"><a href="{{ route('pricing') }}" class="pf-btn pf-btn-primary">See starter plans</a></p></div>
+    </div>
+  </div>
+</section>
+@endsection

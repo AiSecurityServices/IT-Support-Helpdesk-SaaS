@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          extensions: mbstring, xml, sqlite3, pdo_sqlite, bcmath, curl, fileinfo, openssl, tokenizer
+          coverage: none
+
+      - name: Validate composer files
+        # Non-strict: exact pins (breeze 1.10.0, dompdf 2.0, stripe-php 10.0,
+        # google2fa 8.0) are intentional for the PHP 8.0 floor — see composer.json.
+        run: composer validate --no-check-publish
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Prepare test environment
+        run: cp .env.example .env && php artisan key:generate --force
+
+      - name: Secret scan (tracked files only)
+        run: |
+          ! git grep -n -E -i 'sk_live|sk_test_[A-Za-z0-9]{10,}|whsec_[A-Za-z0-9]{10,}|aws_secret|BEGIN RSA PRIVATE KEY' -- ':!vendor' ':!composer.lock' || (echo 'Possible secret in tracked files' && exit 1)
+          test ! -f .env || (echo '.env must never be committed' && exit 1)
+
+      - name: Code style
+        run: php vendor/bin/pint --test app database tests routes config
+
+      - name: Hero JavaScript syntax check
+        run: node --check public/js/service-engine.js
+
+      - name: Fresh migration check (SQLite)
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ':memory:'
+        run: php artisan migrate:fresh --seed --force
+
+      - name: Test suite (incl. tenant isolation)
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: ':memory:'
+        run: php artisan test
+
+      - name: Dependency audit (advisory, non-blocking until upgrade path)
+        run: composer audit || true

@@ -1,0 +1,42 @@
+{{-- Precision icon set (inline SVG, stroke=currentColor). Usage: <x-icon name="ticket" class="pf-icon" /> --}}
+@props(['name' => 'dot', 'class' => 'pf-icon'])
+@php
+$paths = [
+  'dashboard' => '<rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>',
+  'ticket' => '<path d="M4 8V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2a2.5 2.5 0 0 0 0 5v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2a2.5 2.5 0 0 0 0-5Z"/><path d="M14 4v17"/>',
+  'users' => '<circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 14.4c2.9.3 5 2.7 5 5.6"/>',
+  'user' => '<circle cx="12" cy="8" r="3.6"/><path d="M5 20c0-3.9 3.1-7 7-7s7 3.1 7 7"/>',
+  'device' => '<rect x="4" y="3" width="16" height="12" rx="2"/><path d="M9 20h6M12 15v5"/>',
+  'wrench' => '<path d="M14.5 6.5a4 4 0 0 0-5.6 4.9L4 16.3V20h3.7l4.9-4.9a4 4 0 0 0 4.9-5.6l-2.9 2.9-2.4-.7-.7-2.4 3-2.8Z"/>',
+  'bolt' => '<path d="M13 2 4.5 13.5H11L10 22l8.5-11.5H12L13 2Z"/>',
+  'book' => '<path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3V4Z"/><path d="M5 17a3 3 0 0 1 3-3h11"/>',
+  'layers' => '<path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 13 9 5 9-5"/>',
+  'search' => '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/>',
+  'chart' => '<path d="M4 20V4"/><path d="M4 20h16"/><path d="M8 16v-5M12 16V8M16 16v-8"/>',
+  'card' => '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/>',
+  'shield' => '<path d="M12 3 5 6v5c0 5 3 8.5 7 10 4-1.5 7-5 7-10V6l-7-3Z"/><path d="m9.5 12 2 2 3.5-4"/>',
+  'bell' => '<path d="M6 9a6 6 0 1 1 12 0c0 5 2 6 2 6H4s2-1 2-6"/><path d="M10 20a2 2 0 0 0 4 0"/>',
+  'check' => '<path d="m4.5 12.5 5 5 10-11"/>',
+  'x' => '<path d="M6 6l12 12M18 6 6 18"/>',
+  'plus' => '<path d="M12 5v14M5 12h14"/>',
+  'arrow' => '<path d="M4 12h16m-6-6 6 6-6 6"/>',
+  'clock' => '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/>',
+  'alert' => '<path d="M12 3 2.5 20h19L12 3Z"/><path d="M12 10v4M12 17.5v.5"/>',
+  'swap' => '<path d="M4 8h13l-3.5-3.5M20 16H7l3.5 3.5"/>',
+  'box' => '<path d="M4 8l8-4 8 4v8l-8 4-8-4V8Z"/><path d="M4 8l8 4 8-4M12 12v8"/>',
+  'globe' => '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3.5 3 14 0 18M12 3c-3 3.5-3 14 0 18"/>',
+  'sliders' => '<path d="M5 7h14M5 12h14M5 17h14"/><circle cx="10" cy="7" r="2"/><circle cx="15" cy="12" r="2"/><circle cx="8" cy="17" r="2"/>',
+  'file' => '<path d="M6 3h8l4 4v14H6V3Z"/><path d="M14 3v4h4M9 12h6M9 16h6"/>',
+  'logout' => '<path d="M14 4H6v16h8M10 12h11m-3.5-3.5L21 12l-3.5 3.5"/>',
+  'sun' => '<circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/>',
+  'moon' => '<path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5Z"/>',
+  'menu' => '<path d="M4 7h16M4 12h16M4 17h16"/>',
+  'dot' => '<circle cx="12" cy="12" r="5"/>',
+  'signal' => '<path d="M4 18v-4M9 18V9M14 18v-7M19 18V5"/>',
+  'lock' => '<rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 1 1 8 0v3"/>',
+  'eye' => '<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/>',
+  'send' => '<path d="M21 3 10.5 13.5M21 3l-7 18-3.5-7.5L3 10l18-7Z"/>',
+  'refresh' => '<path d="M20 12a8 8 0 1 1-2.3-5.6M20 3v4h-4"/>',
+];
+@endphp
+<svg class="{{ $class }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{!! $paths[$name] ?? $paths['dot'] !!}</svg>
